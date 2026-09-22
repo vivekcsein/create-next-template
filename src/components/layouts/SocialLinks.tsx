@@ -8,19 +8,19 @@ import { appConfig } from "@/packages/configs/app.config";
 const SOCIAL_LINKS = [
   {
     label: "GitHub",
-    href: appConfig.socialMedia.github,
+    href: appConfig.social.github.handle,
     Icon: GithubIcon,
     color: "#24292e",
   },
   {
     label: "X",
-    href: appConfig.socialMedia.twitter,
+    href: appConfig.social.twitter.handle,
     Icon: XIcon,
     color: "#000000",
   },
   {
     label: "LinkedIn",
-    href: appConfig.socialMedia.linkedin,
+    href: appConfig.social.linkedin.handle,
     Icon: LinkedinIcon,
     color: "#0A66C2",
   },

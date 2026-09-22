@@ -20,7 +20,6 @@ import { appConfig } from "./app.config";
 
 export const mainNav: NavTab[] = [
   { id: "home", title: "Home", href: appConfig.routes.home },
-  { id: "blog", title: "Blogs", href: appConfig.routes.blogs },
   {
     id: "company",
     title: "Company",
@@ -29,8 +28,8 @@ export const mainNav: NavTab[] = [
         category: "Company",
         items: [
           { label: "About Us", href: appConfig.routes.about },
-          { label: "Careers", href: appConfig.routes.careers },
-          { label: "Contact", href: appConfig.routes.contact },
+          { label: "Careers", href: appConfig.routes.legal.careers },
+          { label: "Contact", href: appConfig.routes.legal.contact },
         ],
       },
     ],
@@ -67,10 +66,9 @@ export const footerNav: NavSection[] = [
   {
     title: "Company",
     items: [
-      { label: "Blog", href: appConfig.routes.blogs },
       { label: "About Us", href: appConfig.routes.about },
-      { label: "Careers", href: appConfig.routes.careers },
-      { label: "Contact", href: appConfig.routes.contact },
+      { label: "Careers", href: appConfig.routes.legal.careers },
+      { label: "Contact", href: appConfig.routes.legal.contact },
     ],
   },
   {

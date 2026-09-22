@@ -61,6 +61,8 @@ const publicEnvSchema = z.object({
   NEXT_PUBLIC_AUTHOR_NAME: z.string().trim().default("@frenzzofficial"),
 
   NEXT_PUBLIC_AUTHOR_EMAIL: z.string().trim().default("contact@email.com"),
+
+  NEXT_PUBLIC_GOOGLE_VERIFICATION: z.string().trim().optional(),
 });
 
 const parsedPublicEnv = publicEnvSchema.safeParse(process.env);
@@ -95,6 +97,8 @@ export const envPublicConfig = Object.freeze({
 
   AUTHOR_NAME: parsedPublicEnv.data.NEXT_PUBLIC_AUTHOR_NAME,
   AUTHOR_EMAIL: parsedPublicEnv.data.NEXT_PUBLIC_AUTHOR_EMAIL,
+
+  GOOGLE_VERIFICATION: parsedPublicEnv.data.NEXT_PUBLIC_GOOGLE_VERIFICATION,
 });
 
 export type EnvPublicConfig = typeof envPublicConfig;

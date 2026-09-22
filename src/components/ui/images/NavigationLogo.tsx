@@ -21,8 +21,8 @@ const NavigationLogo = ({
 }: NavigationLogoProps) => (
   <ImageComponent
     id="navigation-logo"
-    src={src ?? appConfig.site.logoUrl}
-    alt={`${appConfig.site.name} logo`}
+    src={src ?? appConfig.site.logo}
+    alt={`${appConfig.app.name} logo`}
     href={appConfig.routes.home}
     width={width}
     height={height}

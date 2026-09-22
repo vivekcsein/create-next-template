@@ -35,7 +35,7 @@ const Footer = () => {
 
         <div className="site-footer-bottom">
           <p className="site-footer-copyright">
-            &copy; {year} {appConfig.site.name}. All rights reserved.
+            &copy; {year} {appConfig.app.name}. All rights reserved.
           </p>
         </div>
       </div>

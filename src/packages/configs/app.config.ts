@@ -2,6 +2,7 @@ import { envAppConfig } from "../env/app.env";
 import { envClientConfig } from "../env/client.env";
 import { envPublicConfig } from "../env/public.env";
 import { createRoutes } from "../utils/endpoint";
+import { themeConfig } from "./theme.config";
 
 const api = `${envClientConfig.CLIENT_ORIGIN}/${envClientConfig.CLIENT_PREFIX}`;
 
@@ -9,7 +10,6 @@ export const appConfig = Object.freeze({
   app: {
     name: envPublicConfig.APP_NAME,
     version: envPublicConfig.APP_VERSION,
-    description: envPublicConfig.APP_DESCRIPTION,
     environment: envAppConfig.NODE_ENV,
     locale: "en",
     timezone: "UTC",
@@ -17,20 +17,54 @@ export const appConfig = Object.freeze({
 
   site: {
     url: envPublicConfig.SITE_URL,
-    name: envPublicConfig.APP_NAME,
     title: envPublicConfig.SITE_TITLE,
     description: envPublicConfig.APP_DESCRIPTION,
-
-    logoUrl: envPublicConfig.LOGO_URL,
-    ogImageUrl: envPublicConfig.OG_IMAGE_URL,
-
+    logo: envPublicConfig.LOGO_URL,
+    ogImage: envPublicConfig.OG_IMAGE_URL,
     style: envPublicConfig.ACTIVE_STYLE,
     theme: envPublicConfig.ACTIVE_THEME,
+    titleTemplate: "%s | Vivek's Portfolio",
   },
 
   author: {
     name: envPublicConfig.AUTHOR_NAME,
     email: envPublicConfig.AUTHOR_EMAIL,
+  },
+
+  // Social Profiles
+  social: {
+    twitter: {
+      name: "Twitter",
+      handle: envPublicConfig.TWITTER,
+      cardType: "summary_large_image",
+      icon: "",
+    },
+
+    linkedin: {
+      name: "LinkedIn",
+      handle: envPublicConfig.LINKEDIN,
+      cardType: "summary_large_image",
+      icon: "",
+    },
+
+    github: {
+      name: "GitHub",
+      handle: envPublicConfig.GITHUB,
+      cardType: "summary_large_image",
+      icon: "",
+    },
+  },
+
+  // Repository / Git
+  repository: {
+    reopsitoryName: envPublicConfig.AUTHOR_NAME,
+    repositoryUrl: `https://github.com/${envPublicConfig.AUTHOR_NAME}/portfolio/`,
+    imageUrl: `https://raw.githubusercontent.com/${envPublicConfig.AUTHOR_NAME}/portfolio/refs/heads/main/public/`,
+  },
+
+  // Search Engine Verification
+  verification: {
+    google: envPublicConfig.GOOGLE_VERIFICATION,
   },
 
   logging: {
@@ -50,12 +84,6 @@ export const appConfig = Object.freeze({
     maxLimit: 100,
   },
 
-  socialMedia: {
-    twitter: envPublicConfig.TWITTER,
-    github: envPublicConfig.GITHUB,
-    linkedin: envPublicConfig.LINKEDIN,
-  },
-
   breakpoints: {
     sm: 640,
     md: 768,
@@ -63,6 +91,9 @@ export const appConfig = Object.freeze({
     xl: 1280,
     xxl: 1536,
   },
+
+  // Theme
+  theme: themeConfig,
 
   motion_duration: {
     instant: 100,
@@ -72,21 +103,32 @@ export const appConfig = Object.freeze({
   },
 
   routes: {
+    // Primary Pages
     home: "/",
     about: "/about",
+    notFound: "/404",
 
+    projects: "/projects",
     docs: "/documentation",
     openapi: "/openapi",
-
-    robots: "/robots.txt",
-    sitemap: "/sitemap.xml",
-    favicon: "/favicon.ico",
-
-    blogs: "/blogs",
-    contact: "/contact",
-    careers: "/careers",
     dashboard: "/dashboard",
     profile: "/profile",
+
+    // Legal / Company
+    legal: {
+      careers: "/careers",
+      contact: "/contact",
+      privacy: "/privacy",
+      terms: "/terms",
+    },
+
+    // System / SEO Assets
+    system: {
+      favicon: "/favicon.ico",
+      logo: "/logo.png",
+      robots: "/robots.txt",
+      sitemap: "/sitemap.xml",
+    },
 
     auth: {
       signup: "/signup",
