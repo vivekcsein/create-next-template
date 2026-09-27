@@ -15,10 +15,10 @@ const PANELS: Record<DevSection, ComponentType> = {
   typography: lazy(() => import("./panels/TypographyPanel")),
   buttons: lazy(() => import("./panels/ButtonsPanel")),
   forms: lazy(() => import("./panels/FormsPanel")),
-  surfaces: lazy(() => import("./panels/SurfacesPanel")),
   styles: lazy(() => import("./panels/StylePanel")),
   Links: lazy(() => import("./panels/LinksPanel")),
   marquee: lazy(() => import("./panels/MarqueePanel")),
+  Cards: lazy(() => import("./panels/CardPanels")),
 };
 
 const PanelFallback = () => (

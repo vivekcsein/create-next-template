@@ -1,16 +1,13 @@
 import { z } from "zod";
-
 import { STYLES_THEME_NAMES } from "../configs/styles.config";
+import { parseEnv } from "../utils/parse-env";
 
-const publicEnvSchema = z.object({
+// Public Environment Schema
+const parsedEnvSchema = z.object({
   // App
-  NEXT_PUBLIC_APP_NAME: z
-    .string()
-    .trim()
-    .min(1)
-    .default("create-next-template"),
+  NEXT_PUBLIC_APP_NAME: z.string().trim().min(1).default("@frenzzofficial"),
 
-  NEXT_PUBLIC_APP_VERSION: z.string().trim().default("1.0.4"),
+  NEXT_PUBLIC_APP_VERSION: z.string().trim().min(1).default("2.0.0"),
 
   NEXT_PUBLIC_APP_DESCRIPTION: z
     .string()
@@ -21,7 +18,7 @@ const publicEnvSchema = z.object({
     ),
 
   // Site
-  NEXT_PUBLIC_SITE_URL: z.url().trim().default("http://localhost:3000"),
+  NEXT_PUBLIC_SITE_URL: z.url().default("http://localhost:3000"),
 
   NEXT_PUBLIC_SITE_TITLE: z
     .string()
@@ -29,7 +26,7 @@ const publicEnvSchema = z.object({
     .min(1)
     .default("Top 1% Frontend Template of 2026"),
 
-  NEXT_PUBLIC_LOGO_URL: z.string().trim().default("/logo.png"),
+  NEXT_PUBLIC_LOGO_URL: z.string().trim().min(1).default("/logo.png"),
 
   NEXT_PUBLIC_OG_IMAGE_URL: z.string().trim().optional(),
 
@@ -38,6 +35,7 @@ const publicEnvSchema = z.object({
     .enum(STYLES_THEME_NAMES)
     .default("cyantrix-theme"),
 
+  // Theme
   NEXT_PUBLIC_ACTIVE_THEME: z
     .enum(["system", "light", "dark"])
     .default("system"),
@@ -58,47 +56,53 @@ const publicEnvSchema = z.object({
     .trim()
     .default("https://www.linkedin.com/company/frenzz/"),
 
-  NEXT_PUBLIC_AUTHOR_NAME: z.string().trim().default("@frenzzofficial"),
+  // Author
+  NEXT_PUBLIC_AUTHOR_NAME: z.string().trim().min(1).default("frenzzofficial"),
 
-  NEXT_PUBLIC_AUTHOR_EMAIL: z.string().trim().default("contact@email.com"),
+  NEXT_PUBLIC_AUTHOR_HANDLE: z.string().trim().min(1).default("frenzzofficial"),
 
-  NEXT_PUBLIC_GOOGLE_VERIFICATION: z.string().trim().optional(),
+  NEXT_PUBLIC_AUTHOR_EMAIL: z.email().default("contact@frenzz.in"),
+
+  // Google Verification
+  NEXT_PUBLIC_GOOGLE_VERIFICATION: z
+    .string()
+    .trim()
+    .min(1)
+    .default("google-verification-code"),
 });
 
-const parsedPublicEnv = publicEnvSchema.safeParse(process.env);
+// Validated Public Environment
+const parsedEnv = parseEnv(parsedEnvSchema, "public");
 
-if (!parsedPublicEnv.success) {
-  console.error("❌ Invalid public environment variables:");
-
-  for (const issue of parsedPublicEnv.error.issues) {
-    console.error(`- ${issue.path.join(".")}: ${issue.message}`);
-  }
-
-  throw new Error("Public environment validation failed");
-}
-
+// Public Application Config
 export const envPublicConfig = Object.freeze({
-  APP_NAME: parsedPublicEnv.data.NEXT_PUBLIC_APP_NAME,
-  APP_VERSION: parsedPublicEnv.data.NEXT_PUBLIC_APP_VERSION,
-  APP_DESCRIPTION: parsedPublicEnv.data.NEXT_PUBLIC_APP_DESCRIPTION,
+  // App
+  APP_NAME: parsedEnv.NEXT_PUBLIC_APP_NAME,
+  APP_VERSION: parsedEnv.NEXT_PUBLIC_APP_VERSION,
+  APP_DESCRIPTION: parsedEnv.NEXT_PUBLIC_APP_DESCRIPTION,
 
-  SITE_URL: parsedPublicEnv.data.NEXT_PUBLIC_SITE_URL,
-  SITE_TITLE: parsedPublicEnv.data.NEXT_PUBLIC_SITE_TITLE,
+  // Site
+  SITE_URL: parsedEnv.NEXT_PUBLIC_SITE_URL,
+  SITE_TITLE: parsedEnv.NEXT_PUBLIC_SITE_TITLE,
+  LOGO_URL: parsedEnv.NEXT_PUBLIC_LOGO_URL,
+  OG_IMAGE_URL: parsedEnv.NEXT_PUBLIC_OG_IMAGE_URL,
 
-  LOGO_URL: parsedPublicEnv.data.NEXT_PUBLIC_LOGO_URL,
-  OG_IMAGE_URL: parsedPublicEnv.data.NEXT_PUBLIC_OG_IMAGE_URL,
+  // Theme
+  ACTIVE_STYLE: parsedEnv.NEXT_PUBLIC_ACTIVE_STYLE,
+  ACTIVE_THEME: parsedEnv.NEXT_PUBLIC_ACTIVE_THEME,
 
-  ACTIVE_STYLE: parsedPublicEnv.data.NEXT_PUBLIC_ACTIVE_STYLE,
-  ACTIVE_THEME: parsedPublicEnv.data.NEXT_PUBLIC_ACTIVE_THEME,
+  // Social
+  TWITTER: parsedEnv.NEXT_PUBLIC_TWITTER,
+  LINKEDIN: parsedEnv.NEXT_PUBLIC_LINKEDIN,
+  GITHUB: parsedEnv.NEXT_PUBLIC_GITHUB,
 
-  TWITTER: parsedPublicEnv.data.NEXT_PUBLIC_TWITTER,
-  GITHUB: parsedPublicEnv.data.NEXT_PUBLIC_GITHUB,
-  LINKEDIN: parsedPublicEnv.data.NEXT_PUBLIC_LINKEDIN,
+  // Author
+  AUTHOR_NAME: parsedEnv.NEXT_PUBLIC_AUTHOR_NAME,
+  AUTHOR_HANDLE: parsedEnv.NEXT_PUBLIC_AUTHOR_HANDLE,
+  AUTHOR_EMAIL: parsedEnv.NEXT_PUBLIC_AUTHOR_EMAIL,
 
-  AUTHOR_NAME: parsedPublicEnv.data.NEXT_PUBLIC_AUTHOR_NAME,
-  AUTHOR_EMAIL: parsedPublicEnv.data.NEXT_PUBLIC_AUTHOR_EMAIL,
-
-  GOOGLE_VERIFICATION: parsedPublicEnv.data.NEXT_PUBLIC_GOOGLE_VERIFICATION,
+  // Google Verification
+  GOOGLE_VERIFICATION: parsedEnv.NEXT_PUBLIC_GOOGLE_VERIFICATION,
 });
 
 export type EnvPublicConfig = typeof envPublicConfig;

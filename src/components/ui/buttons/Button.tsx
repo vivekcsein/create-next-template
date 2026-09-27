@@ -1,36 +1,50 @@
-import React from "react";
+import * as React from "react";
 import { cn } from "@/packages/utils/cn";
-import type { Variants } from "@/types/app";
 
-export interface ButtonProps
-  extends React.ButtonHTMLAttributes<HTMLButtonElement> {
-  label?: string;
-  variant?: Variants;
+import { PrimaryButton } from "./PrimaryButton";
+import { SecondaryButton } from "./SecondaryButton";
+
+// map of all button variants
+const buttonVariants = {
+  primary: PrimaryButton,
+  secondary: SecondaryButton,
+} as const;
+
+export type ButtonVariant = keyof typeof buttonVariants;
+
+export type ButtonSize = "sm" | "md" | "lg" | "icon";
+
+export interface ButtonProps extends React.ComponentProps<"button"> {
+  variant?: ButtonVariant;
+  size?: ButtonSize;
 }
+
+const buttonSizes: Record<ButtonSize, string> = {
+  sm: "h-9 px-4 text-sm",
+  md: "h-11 px-5 text-[0.9375rem]",
+  lg: "h-12 px-7 text-base",
+  icon: "size-11 px-0",
+};
 
 const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
   (
-    {
-      label,
-      children,
-      className,
-      variant = "primary",
-      type = "button", // Prevent accidental form submission
-      ...props
-    },
+    { variant = "primary", size = "md", className, children, ...props },
     ref,
-  ) => (
-    <button
-      ref={ref}
-      type={type}
-      className={cn("btn", `${variant}-btn`, className)}
-      {...props}
-    >
-      {label ?? children}
-    </button>
-  ),
+  ) => {
+    const ButtonComponent = buttonVariants[variant];
+
+    return (
+      <ButtonComponent
+        ref={ref}
+        className={cn(buttonSizes[size], className)}
+        {...props}
+      >
+        {children}
+      </ButtonComponent>
+    );
+  },
 );
 
 Button.displayName = "Button";
 
-export default Button;
+export { Button };

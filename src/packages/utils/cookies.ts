@@ -32,7 +32,8 @@ export const getCookie = (name: string): string | null => {
 
   if (!match) return null;
 
-  const value = match.split("=")[1];
+  const [, ...rest] = match.split("=");
+  const value = rest.join("=");
   return value ? decodeURIComponent(value) : null;
 };
 

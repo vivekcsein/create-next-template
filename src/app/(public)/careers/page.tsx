@@ -1,5 +1,7 @@
+import UnderDevelopment from "@/components/features/home/UnderDevelopment";
+
 const CareersPage = () => {
-  return <div>page</div>;
+  return <UnderDevelopment />;
 };
 
 export default CareersPage;

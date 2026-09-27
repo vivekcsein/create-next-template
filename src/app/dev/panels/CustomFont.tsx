@@ -6,7 +6,7 @@ const CustomFont = () => {
 
   const customFont =
     currentTheme === "cyantrix-theme"
-      ? "font-ligature"
+      ? "font-custom font-bold"
       : "font-brilliant font-bold";
 
   return (

@@ -1,30 +1,26 @@
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
-  /* config options here */
-  reactCompiler: true,
-  // output:"export",
-
-  //loading images from githubusercontent.com
-  images: {
-    remotePatterns: [
+  reactStrictMode: true,
+  poweredByHeader: false,
+  typescript: {
+    ignoreBuildErrors: false,
+  },
+  async headers() {
+    return [
       {
-        protocol: "https",
-        hostname: "**.githubusercontent.com",
+        source: "/:path*",
+        headers: [
+          { key: "X-Content-Type-Options", value: "nosniff" },
+          { key: "X-Frame-Options", value: "DENY" },
+          { key: "Referrer-Policy", value: "strict-origin-when-cross-origin" },
+          {
+            key: "Permissions-Policy",
+            value: "camera=(), microphone=(), geolocation=()",
+          },
+        ],
       },
-      {
-        protocol: "https",
-        hostname: "i.ibb.co",
-      },
-      {
-        protocol: "https",
-        hostname: "i.pravatar.cc",
-      },
-      {
-        protocol: "https",
-        hostname: "images.unsplash.com",
-      },
-    ],
+    ];
   },
 };
 

@@ -1,6 +1,9 @@
-import { type ComponentType, type SVGProps, useId } from "react";
+import type { ComponentType, ReactNode, SVGProps } from "react";
+import { useId } from "react";
 
-type BrandIconProps = SVGProps<SVGSVGElement>;
+export type BrandIconProps = SVGProps<SVGSVGElement> & {
+  size?: number;
+};
 
 export type BrandIconName =
   | "github"
@@ -16,33 +19,30 @@ export type BrandIconName =
   | "telegram"
   | "dribbble";
 
-export type BrandIconItem = {
-  icon: BrandIconName;
-  label: string;
-  href?: string;
-  ariaLabel?: string;
-};
-
-type BrandIconListProps = {
-  items: BrandIconItem[];
-  className?: string;
-  iconClassName?: string;
+type SvgShellProps = BrandIconProps & {
+  title: string;
+  children: ReactNode;
 };
 
 const SvgShell = ({
   title,
   children,
+  size = 16,
+  width,
+  height,
   ...props
-}: BrandIconProps & { title: string }) => {
+}: SvgShellProps) => {
   const titleId = useId();
 
   return (
     <svg
+      {...props}
+      width={width ?? size}
+      height={height ?? size}
       viewBox="0 0 24 24"
       fill="currentColor"
       role="img"
       aria-labelledby={titleId}
-      {...props}
     >
       <title id={titleId}>{title}</title>
       {children}
@@ -140,44 +140,14 @@ export const brandIcons = {
   dribbble: DribbbleBrandIcon,
 } satisfies Record<BrandIconName, ComponentType<BrandIconProps>>;
 
+// Generic Brand Icon
 export const BrandIcon = ({
   name,
   ...props
-}: BrandIconProps & { name: BrandIconName }) => {
+}: BrandIconProps & {
+  name: BrandIconName;
+}) => {
   const Icon = brandIcons[name];
 
   return <Icon {...props} />;
 };
-
-export const BrandIconList = ({
-  items,
-  className,
-  iconClassName,
-}: BrandIconListProps) => (
-  <div className={className}>
-    {items.map((item) => {
-      const icon = (
-        <>
-          <BrandIcon name={item.icon} className={iconClassName} />
-          <span>{item.label}</span>
-        </>
-      );
-
-      return item.href ? (
-        <a
-          key={`${item.icon}-${item.href}`}
-          href={item.href}
-          aria-label={item.ariaLabel ?? item.label}
-          target="_blank"
-          rel="noreferrer"
-        >
-          {icon}
-        </a>
-      ) : (
-        <span key={`${item.icon}-${item.label}`}>{icon}</span>
-      );
-    })}
-  </div>
-);
-
-export default BrandIconList;

@@ -8,9 +8,9 @@ export type DevSection =
   | "typography"
   | "buttons"
   | "forms"
-  | "surfaces"
   | "styles"
   | "Links"
+  | "Cards"
   | "marquee";
 
 type DevContextValue = {

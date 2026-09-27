@@ -57,7 +57,7 @@ export const toTitleCase = (text: string): string =>
     (word) => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase(),
   );
 
-/** e.g. getInitials("Vivek Kumar") -> "VK" (first letter of the first two words) */
+/** e.g. getInitials("") -> "VK" (first letter of the first two words) */
 export const getInitials = (fullName: string, maxInitials = 2): string =>
   fullName
     .trim()

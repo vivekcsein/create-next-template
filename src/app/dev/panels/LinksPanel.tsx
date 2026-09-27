@@ -1,18 +1,13 @@
-import { Link } from "@/components/ui";
-import type { LinkVariants, Position } from "@/types/app";
+import { Link, type LinkUnderline, type LinkVariants } from "@/components/ui";
 import ComponentPreview from "../preview/ComponentPreview";
 
 const LINKS_VARIANTS: LinkVariants[] = [
   "primary",
   "secondary",
-  "neutral",
-  "button",
+  "primary-button",
+  "secondary-button",
 ];
-const LINKS_DIRECTIONS: Omit<Position, "top" | "bottom">[] = [
-  "left",
-  "center",
-  "right",
-];
+const LINKS_DIRECTIONS: LinkUnderline[] = ["left", "center", "right"];
 
 const LinksPanel = () => {
   return (
@@ -47,7 +42,7 @@ const LinksPanel = () => {
             <Link
               key={LINKS_DIRECTIONS.indexOf(direction)}
               variant="primary"
-              direction={direction}
+              underline={direction}
               href={"#"}
             >
               primary-{direction}

@@ -1,13 +1,7 @@
-import {
+import fontsConfig, {
   brilliantPerformer,
   consolasligaturizedv2,
   georgia,
-  inika,
-  inter,
-  kode_mono,
-  oxanium,
-  poppins,
-  roboto,
 } from "./fonts.config";
 
 /**
@@ -27,6 +21,7 @@ export type StyleTheme = {
    */
   name: string;
   label: string;
+  type: "custom-theme" | "color-theme";
   description: string;
   fonts: readonly FontLoader[];
   /** Where the theme file lives, kept for reference/tooling only. */
@@ -38,16 +33,98 @@ export const STYLE_THEMES = [
   {
     name: "cosmic-night",
     label: "Cosmic Night",
+    type: "custom-theme",
     description: "A cosmic dark theme",
-    fonts: [roboto, inter, poppins],
-    src: "@/styles/themes/cosmic-night.css",
+    fonts: [fontsConfig.sans, fontsConfig.serif, fontsConfig.mono],
+    src: "@/styles/themes/custom-themes/cosmic-night.css",
   },
   {
     name: "cyantrix-theme",
     label: "Cyantrix",
+    type: "custom-theme",
     description: "A cyan/teal tech theme",
-    fonts: [oxanium, inika, kode_mono],
-    src: "@/styles/themes/cyantrix-theme.css",
+    fonts: [fontsConfig.sans, fontsConfig.serif, fontsConfig.mono],
+    src: "@/styles/themes/custom-themes/cyantrix-theme.css",
+  },
+  {
+    name: "amber-theme",
+    label: "Amber",
+    type: "color-theme",
+    description: "A soft amber theme",
+    fonts: [fontsConfig.sans, fontsConfig.serif, fontsConfig.mono],
+    src: "@/styles/themes/color-themes/amber-theme.css",
+  },
+  {
+    name: "emerald-theme",
+    label: "Emerald",
+    type: "color-theme",
+    description: "A soft emerald theme",
+    fonts: [fontsConfig.sans, fontsConfig.serif, fontsConfig.mono],
+    src: "@/styles/themes/color-themes/emerald-theme.css",
+  },
+  {
+    name: "mono-theme",
+    label: "Mono",
+    type: "color-theme",
+    description: "A monochrome theme",
+    fonts: [fontsConfig.sans, fontsConfig.serif, fontsConfig.mono],
+    src: "@/styles/themes/color-themes/mono-theme.css",
+  },
+  {
+    name: "rose-theme",
+    label: "Rose",
+    type: "color-theme",
+    description: "A soft rose theme",
+    fonts: [fontsConfig.sans, fontsConfig.serif, fontsConfig.mono],
+    src: "@/styles/themes/color-themes/rose-theme.css",
+  },
+  {
+    name: "sky-theme",
+    label: "Sky",
+    type: "color-theme",
+    description: "A soft sky theme",
+    fonts: [fontsConfig.sans, fontsConfig.serif, fontsConfig.mono],
+    src: "@/styles/themes/color-themes/sky-theme.css",
+  },
+  {
+    name: "slate-theme",
+    label: "Slate",
+    type: "color-theme",
+    description: "A soft slate theme",
+    fonts: [fontsConfig.sans, fontsConfig.serif, fontsConfig.mono],
+    src: "@/styles/themes/color-themes/slate-theme.css",
+  },
+  {
+    name: "stone-theme",
+    label: "Stone",
+    type: "color-theme",
+    description: "A soft stone theme",
+    fonts: [fontsConfig.sans, fontsConfig.serif, fontsConfig.mono],
+    src: "@/styles/themes/color-themes/stone-theme.css",
+  },
+  {
+    name: "teal-theme",
+    label: "Teal",
+    type: "color-theme",
+    description: "A soft teal theme",
+    fonts: [fontsConfig.sans, fontsConfig.serif, fontsConfig.mono],
+    src: "@/styles/themes/colors-themes/teal-theme.css",
+  },
+  {
+    name: "violet-theme",
+    label: "Violet",
+    type: "color-theme",
+    description: "A soft violet theme",
+    fonts: [fontsConfig.sans, fontsConfig.serif, fontsConfig.mono],
+    src: "@/styles/themes/colors-themes/violet-theme.css",
+  },
+  {
+    name: "zinc-theme",
+    label: "Zinc",
+    type: "color-theme",
+    description: "A soft zinc theme",
+    fonts: [fontsConfig.sans, fontsConfig.serif, fontsConfig.mono],
+    src: "@/styles/themes/colors-themes/zinc-theme.css",
   },
 ] as const satisfies readonly StyleTheme[];
 

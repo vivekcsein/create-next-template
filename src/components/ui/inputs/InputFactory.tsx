@@ -1,140 +1,103 @@
-import type {
-  FieldError,
-  FieldValues,
-  Path,
-  UseFormRegister,
-} from "react-hook-form";
-import type { InputFactoryType } from "@/types/app";
-import Checkbox from "./Checkbox";
+import "@/styles/ui/input.css";
+import "@/styles/ui/input-autofill.css";
+import type { Control, UseFormRegister } from "react-hook-form";
+import Checkbox from "@/components/ui/inputs/Checkbox";
+import Select from "@/components/ui/inputs/Select";
+import type { InputType } from "@/types/app";
 import Input from "./Input";
-import PasswordInput from "./PasswordInput";
-import Select from "./Select";
-import Textarea from "./Textarea";
+import InputDate from "./InputDate";
+import InputPassword from "./InputPassword";
+import InputPhone from "./InputPhone";
 
-/**
- * Field definition consumed by `InputFactory`, generic over the form's own
- * `TFieldValues`. `id` is typed as `Path<TFieldValues>` (not a bare
- * `string`), so a typo'd field name — `"emial"` instead of `"email"` — is a
- * compile error instead of a silent runtime bug.
- */
-export type BaseInputProps<TFieldValues extends FieldValues = FieldValues> = {
-  id: Path<TFieldValues>;
-  type: InputFactoryType;
-  label?: string;
-  placeholder?: string;
+export interface InputFactoryProps {
+  id: string;
+  type: InputType;
+  label: string;
+  placeholder: string;
   required?: boolean;
-  register: UseFormRegister<TFieldValues>;
+  autoComplete?: string;
   options?: { label: string; value: string }[];
-  /** Pass `formState.errors[field.id]` straight through — we read `.message` ourselves. */
-  error?: FieldError;
+  // typed as unknown so callers don't need generics; cast internally
+  register: UseFormRegister<Record<string, unknown>>;
+  control: Control<Record<string, unknown>>;
+  error?: { message: string };
+}
+
+// ─── Factory ──────────────────────────────────────────────────────────────────
+const InputFactory: Record<
+  string,
+  (props: InputFactoryProps) => React.ReactNode
+> = {
+  text: (props: InputFactoryProps) => (
+    <Input
+      id={props.id}
+      placeholder={props.placeholder}
+      autoComplete={props.autoComplete}
+      error={props.error?.message}
+      {...props.register(props.id)}
+    />
+  ),
+
+  email: (props: InputFactoryProps) => (
+    <Input
+      type="email"
+      id={props.id}
+      placeholder={props.placeholder}
+      autoComplete={props.autoComplete ?? "email"}
+      error={props.error?.message}
+      {...props.register(props.id)}
+    />
+  ),
+
+  password: (props: InputFactoryProps) => (
+    <InputPassword
+      id={props.id}
+      placeholder={props.placeholder}
+      autoComplete={props.autoComplete}
+      error={props.error?.message}
+      {...props.register(props.id)}
+    />
+  ),
+
+  tel: (props: InputFactoryProps) => (
+    <InputPhone
+      id={props.id}
+      placeholder={props.placeholder}
+      autoComplete={props.autoComplete}
+      error={props.error?.message}
+      {...props.register(props.id)}
+    />
+  ),
+
+  date: (props: InputFactoryProps) => (
+    <InputDate
+      id={props.id}
+      placeholder={props.placeholder}
+      autoComplete={props.autoComplete}
+      error={props.error?.message}
+      {...props.register(props.id)}
+    />
+  ),
+
+  checkbox: (props: InputFactoryProps) => (
+    <Checkbox
+      id={props.id}
+      label={props.label}
+      error={props.error?.message}
+      {...props.register(props.id)}
+    />
+  ),
+
+  select: (props: InputFactoryProps) => (
+    <Select
+      id={props.id}
+      label={props.label}
+      options={props.options ?? []}
+      required={props.required}
+      register={props.register}
+      errorMessage={props.error?.message}
+    />
+  ),
 };
-
-export type InputFactoryProps<TFieldValues extends FieldValues> = {
-  field: BaseInputProps<TFieldValues>;
-};
-
-/**
- * Renders the right presentational input for a given field definition and
- * wires it into react-hook-form via `register()`.
- *
- *   {SignInFields.map((field) => (
- *     <InputFactory key={field.id} field={field} />
- *   ))}
- *
- * Every underlying element (input / select / checkbox) is a native HTML
- * form control, so `register()` alone is enough to bind it — there's no
- * `control` / `Controller` here. If a future field type needs a non-native
- * widget (a combobox, date-picker, tag input, etc.), that's the point to
- * introduce `Controller` for that one case, rather than threading `control`
- * through every field up front for something only one of them would use.
- */
-const InputFactory = <TFieldValues extends FieldValues>({
-  field,
-}: InputFactoryProps<TFieldValues>) => {
-  const { id, type, label, placeholder, required, register, options, error } =
-    field;
-
-  // register(id) returns { name, onChange, onBlur, ref } — spread straight
-  // onto the native element below, no manual state wiring needed.
-  const registration = register(id);
-  const errorMessage = error?.message;
-
-  switch (type) {
-    case "text":
-    case "email":
-      return (
-        <Input
-          id={id}
-          type={type}
-          label={label}
-          placeholder={placeholder}
-          required={required}
-          error={errorMessage}
-          {...registration}
-        />
-      );
-
-    case "password":
-      return (
-        <PasswordInput
-          id={id}
-          label={label}
-          placeholder={placeholder}
-          required={required}
-          error={errorMessage}
-          {...registration}
-        />
-      );
-
-    case "checkbox":
-      return (
-        <Checkbox
-          id={id}
-          label={label}
-          required={required}
-          error={errorMessage}
-          {...registration}
-        />
-      );
-
-    case "select":
-      return (
-        <Select
-          id={id}
-          label={label}
-          options={options ?? []}
-          required={required}
-          error={errorMessage}
-          {...registration}
-        />
-      );
-
-    case "textarea":
-      return (
-        <Textarea
-          id={id}
-          label={label}
-          placeholder={placeholder}
-          required={required}
-          error={errorMessage}
-          {...registration}
-        />
-      );
-
-    default: {
-      // Exhaustiveness check — add a new InputFieldType without a matching
-      // `case` above, and this line fails to compile.
-      const _exhaustive: never = type;
-      if (process.env.NODE_ENV !== "production") {
-        console.warn(
-          `InputFactory: no renderer registered for input type "${_exhaustive}"`,
-        );
-      }
-      return null;
-    }
-  }
-};
-
-InputFactory.displayName = "InputFactory";
 
 export default InputFactory;

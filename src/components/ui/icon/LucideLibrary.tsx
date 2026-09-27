@@ -1,27 +1,75 @@
+import type { LucideIcon } from "lucide-react";
+
 import {
+  AlignLeft,
+  ArrowLeft,
+  ArrowRight,
+  AtSign,
+  Book,
+  Bookmark,
   BookOpen,
+  Box,
+  Boxes,
+  Calendar,
+  Check,
+  CheckCircle2,
   ChevronDown,
+  ChevronLeft,
   ChevronRight,
   CircleCheck,
+  Clock,
+  Code2,
   Compass,
+  Container,
+  Copy,
+  CornerDownLeft,
   Cpu,
   CreditCard,
+  Database,
+  Diamond,
+  FileText,
+  Flag,
+  Flame,
+  FlaskConical,
+  Folder,
   Grid2x2,
+  Grid3x3,
   Heart,
   HeartPulse,
   Home,
+  Image,
+  Layers,
+  LayoutGrid,
+  Link2,
+  Lock,
   LogIn,
-  type LucideIcon,
+  Mail,
   MapPin,
   Menu,
+  Monitor,
+  Moon,
   Package,
+  PanelLeft,
+  Plus,
+  Quote,
+  Rocket,
   Search,
+  Server,
   Settings,
+  Share2,
+  Shield,
   Shirt,
   ShoppingBag,
   ShoppingCart,
+  Shuffle,
+  SlidersHorizontal,
   Sparkles,
+  Star,
+  Sun,
+  Target,
+  Terminal,
   TrendingUp,
+  Trophy,
   Truck,
   User,
   UserPlus,
@@ -29,86 +77,104 @@ import {
   X,
 } from "lucide-react";
 
-import {
-  InstagramBrandIcon,
-  LinkedinBrandIcon,
-  TwitterBrandIcon,
-} from "./BrandIcons";
-
-type IconComponent = LucideIcon | typeof InstagramBrandIcon;
-
-const iconMap: Record<string, IconComponent> = {
-  // Lucide icons
+export const lucideIcons = {
+  // Navigation
   home: Home,
-  compass: Compass,
-  "trending-up": TrendingUp,
-  "shopping-bag": ShoppingBag,
-  search: Search,
-  heart: Heart,
-  user: User,
-  "shopping-cart": ShoppingCart,
-  "grid-2x2": Grid2x2,
-  shirt: Shirt,
-  cpu: Cpu,
-  "book-open": BookOpen,
-  sparkles: Sparkles,
-  watch: Watch,
-  "heart-pulse": HeartPulse,
-  package: Package,
-  "map-pin": MapPin,
-  settings: Settings,
-  "log-in": LogIn,
-  "user-plus": UserPlus,
-  truck: Truck,
-  "credit-card": CreditCard,
-  "circle-check": CircleCheck,
-
-  // UI icons
   menu: Menu,
   close: X,
+  "panel-left": PanelLeft,
   "chevron-down": ChevronDown,
+  "chevron-left": ChevronLeft,
   "chevron-right": ChevronRight,
+  "arrow-left": ArrowLeft,
+  "arrow-right": ArrowRight,
+  "corner-down-left": CornerDownLeft,
 
-  // Brand icons
-  instagram: InstagramBrandIcon,
-  twitter: TwitterBrandIcon,
-  linkedin: LinkedinBrandIcon,
-};
+  // Actions
+  add: Plus,
+  check: Check,
+  copy: Copy,
+  search: Search,
+  share: Share2,
+  shuffle: Shuffle,
+  "log-in": LogIn,
 
-type LucideLibraryProps = {
-  /** Icon key from navigation.config */
-  name?: string;
-  className?: string;
-  size?: number;
-  strokeWidth?: number;
-};
+  // Content
+  "file-text": FileText,
+  folder: Folder,
+  book: Book,
+  "book-open": BookOpen,
+  bookmark: Bookmark,
+  quote: Quote,
+  image: Image,
+  link: Link2,
+  "align-left": AlignLeft,
 
-const LucideLibrary = ({
-  name,
-  className,
-  size,
-  strokeWidth,
-}: LucideLibraryProps) => {
-  if (!name) return null;
+  // Users
+  user: User,
+  "user-plus": UserPlus,
+  mail: Mail,
+  "at-sign": AtSign,
 
-  const Icon = iconMap[name];
+  // Commerce
+  "shopping-bag": ShoppingBag,
+  "shopping-cart": ShoppingCart,
+  package: Package,
+  shirt: Shirt,
+  watch: Watch,
+  "credit-card": CreditCard,
+  truck: Truck,
 
-  if (!Icon) {
-    if (process.env.NODE_ENV !== "production") {
-      console.warn(`IconLibrary: no icon mapped for "${name}"`);
-    }
+  // Technology
+  code: Code2,
+  cpu: Cpu,
+  database: Database,
+  server: Server,
+  terminal: Terminal,
+  monitor: Monitor,
+  container: Container,
+  box: Box,
+  boxes: Boxes,
+  layers: Layers,
 
-    return null;
-  }
+  // Status & Feedback
+  "circle-check": CircleCheck,
+  "check-circle": CheckCircle2,
+  clock: Clock,
+  lock: Lock,
+  shield: Shield,
 
-  return (
-    <Icon
-      className={className}
-      size={size}
-      strokeWidth={strokeWidth}
-      aria-hidden="true"
-    />
-  );
-};
+  // UI & Layout
+  sliders: SlidersHorizontal,
+  settings: Settings,
+  "grid-small": Grid2x2,
+  "grid-medium": Grid3x3,
+  "layout-grid": LayoutGrid,
 
-export default LucideLibrary;
+  // Marketing & Highlights
+  flame: Flame,
+  sparkles: Sparkles,
+  star: Star,
+  rocket: Rocket,
+  target: Target,
+  trophy: Trophy,
+  "trending-up": TrendingUp,
+
+  // Location & Planning
+  calendar: Calendar,
+  "map-pin": MapPin,
+  compass: Compass,
+  flag: Flag,
+
+  // Theme
+  moon: Moon,
+  sun: Sun,
+
+  // Miscellaneous
+  heart: Heart,
+  "heart-pulse": HeartPulse,
+  diamond: Diamond,
+  "flask-conical": FlaskConical,
+} satisfies Record<string, LucideIcon>;
+
+export type LucideIconName = keyof typeof lucideIcons;

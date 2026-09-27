@@ -1,34 +1,28 @@
 import React from "react";
-import { cn } from "@/packages/utils/cn";
 
-type CheckboxProps = React.InputHTMLAttributes<HTMLInputElement> & {
+export interface CheckboxProps
+  extends React.InputHTMLAttributes<HTMLInputElement> {
   label?: string;
   error?: string;
-};
+}
 
 const Checkbox = React.forwardRef<HTMLInputElement, CheckboxProps>(
-  ({ label, error, className, id, required, ...props }, ref) => {
+  ({ label, error, id, ...props }, ref) => {
     const generatedId = React.useId();
     const inputId = id ?? generatedId;
-    const errorId = `${inputId}-error`;
+    const errorShow = !!error?.length;
 
     return (
-      <div className="checkbox-field">
-        <label htmlFor={inputId} className={cn("checkbox-wrapper", className)}>
+      <div className="checkbox-wrapper">
+        <label htmlFor={inputId} className="cursor-pointer">
           <input
             ref={ref}
             id={inputId}
             type="checkbox"
-            required={required}
             className="checkbox-input"
-            aria-invalid={!!error}
-            aria-describedby={error ? errorId : undefined}
             {...props}
           />
 
-          {/* Custom box — driven purely by CSS via the `:checked` sibling
-              selector on `.checkbox-input`, see input.css §5. No JS toggle
-              needed for the visual state. */}
           <div className="checkbox-box">
             <svg
               viewBox="0 0 24 24"
@@ -39,22 +33,15 @@ const Checkbox = React.forwardRef<HTMLInputElement, CheckboxProps>(
               <path d="M5 13l4 4L19 7" />
             </svg>
           </div>
-
-          {label && (
-            <span className="checkbox-label">
-              {label}
-              {required && (
-                <span className="input-required" aria-hidden="true">
-                  *
-                </span>
-              )}
-            </span>
-          )}
         </label>
 
-        {error && (
-          <span id={errorId} role="alert" className="checkbox-error-text">
-            {error}
+        {(label || error) && (
+          <span
+            className={
+              errorShow ? "text-destructive text-sm" : "checkbox-label text-sm"
+            }
+          >
+            {errorShow ? error : label}
           </span>
         )}
       </div>

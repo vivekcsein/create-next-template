@@ -1,33 +1,36 @@
 import { envAppConfig } from "../env/app.env";
 import { envClientConfig } from "../env/client.env";
 import { envPublicConfig } from "../env/public.env";
-import { createRoutes } from "../utils/endpoint";
 import { themeConfig } from "./theme.config";
 
-const api = `${envClientConfig.CLIENT_ORIGIN}/${envClientConfig.CLIENT_PREFIX}`;
+const apiBaseUrl = `${envClientConfig.clientOrigin}/${envClientConfig.clientPrefix}`;
 
-export const appConfig = Object.freeze({
+const appConfig = {
+  // Application
   app: {
-    name: envPublicConfig.APP_NAME,
     version: envPublicConfig.APP_VERSION,
     environment: envAppConfig.NODE_ENV,
     locale: "en",
     timezone: "UTC",
   },
 
+  // Website
   site: {
-    url: envPublicConfig.SITE_URL,
+    name: envPublicConfig.APP_NAME,
     title: envPublicConfig.SITE_TITLE,
     description: envPublicConfig.APP_DESCRIPTION,
+    url: envPublicConfig.SITE_URL,
     logo: envPublicConfig.LOGO_URL,
     ogImage: envPublicConfig.OG_IMAGE_URL,
-    style: envPublicConfig.ACTIVE_STYLE,
     theme: envPublicConfig.ACTIVE_THEME,
-    titleTemplate: "%s | Vivek's Portfolio",
+    style: envPublicConfig.ACTIVE_STYLE,
+    titleTemplate: "%s | Next Template",
   },
 
+  // Author
   author: {
     name: envPublicConfig.AUTHOR_NAME,
+    handle: envPublicConfig.AUTHOR_HANDLE,
     email: envPublicConfig.AUTHOR_EMAIL,
   },
 
@@ -57,9 +60,9 @@ export const appConfig = Object.freeze({
 
   // Repository / Git
   repository: {
-    reopsitoryName: envPublicConfig.AUTHOR_NAME,
-    repositoryUrl: `https://github.com/${envPublicConfig.AUTHOR_NAME}/portfolio/`,
-    imageUrl: `https://raw.githubusercontent.com/${envPublicConfig.AUTHOR_NAME}/portfolio/refs/heads/main/public/`,
+    repositoryName: envPublicConfig.AUTHOR_NAME,
+    repositoryUrl: `https://github.com/${envPublicConfig.AUTHOR_HANDLE}/create-next-template/`,
+    imageUrl: `https://raw.githubusercontent.com/${envPublicConfig.AUTHOR_HANDLE}/create-next-template/refs/heads/main/public/`,
   },
 
   // Search Engine Verification
@@ -67,23 +70,27 @@ export const appConfig = Object.freeze({
     google: envPublicConfig.GOOGLE_VERIFICATION,
   },
 
+  // Application Logging
   logging: {
     enabled: envAppConfig.NODE_ENV !== "production",
     stackTrace: envAppConfig.NODE_ENV !== "production",
   },
 
+  // HTTP Headers
   headers: {
     requestId: "X-Request-Id",
     traceId: "X-Trace-Id",
     poweredBy: "X-Powered-By",
   },
 
+  // Pagination
   pagination: {
     defaultPage: 1,
     defaultLimit: 20,
     maxLimit: 100,
   },
 
+  // Responsive Breakpoints
   breakpoints: {
     sm: 640,
     md: 768,
@@ -95,28 +102,39 @@ export const appConfig = Object.freeze({
   // Theme
   theme: themeConfig,
 
-  motion_duration: {
-    instant: 100,
-    fast: 150,
-    base: 250,
-    slow: 400,
+  // Animation / Motion
+  motion: {
+    duration: {
+      instant: 100,
+      fast: 150,
+      base: 250,
+      slow: 400,
+    },
   },
 
+  // Application Routes
   routes: {
     // Primary Pages
     home: "/",
     about: "/about",
     notFound: "/404",
 
-    projects: "/projects",
-    docs: "/documentation",
-    openapi: "/openapi",
-    dashboard: "/dashboard",
-    profile: "/profile",
+    // SEO
+    seo: {
+      robots: "/robots.txt",
+      sitemap: "/sitemap.xml",
+    },
 
-    // Legal / Company
+    // Services
+    services: {
+      webDevelopment: "/web-development",
+      backend: "/backend-development",
+      performanceSeo: "/performance-seo",
+      authenticationSecurity: "/authentication-security",
+    },
+
+    // Legal Company
     legal: {
-      careers: "/careers",
       contact: "/contact",
       privacy: "/privacy",
       terms: "/terms",
@@ -131,36 +149,16 @@ export const appConfig = Object.freeze({
     },
 
     auth: {
-      signup: "/signup",
-      signin: "/signin",
-      signout: "/signout",
-      forgotPassword: "/forgot-password",
+      signIn: "/auth/signin",
+      signUp: "/auth/signup",
+      profile: "/profile",
     },
   },
 
+  // API
   api: {
-    auth: {
-      email: createRoutes(`${api}/auth/email`, {
-        signin: "/signin",
-        signup: "/signup",
-        signout: "/signout",
-        refresh: "/refresh",
-        me: "/me",
-        verifyEmail: "/verify-email",
-        forgotPassword: "/forgot-password",
-        resetPassword: "/reset-password",
-      }),
-
-      phone: createRoutes(`${api}/auth/phone`, {
-        signin: "/signin",
-        signup: "/signup",
-        sendOtp: "/send-otp",
-        verifyOtp: "/verify-otp",
-      }),
-    },
+    baseUrl: apiBaseUrl,
   },
+} as const;
 
-  keywords: ["next.js", "react", "typescript", "frontend", "template"],
-});
-
-export type AppConfig = typeof appConfig;
+export default appConfig;

@@ -7,9 +7,7 @@ import {
   useEffect,
   useState,
 } from "react";
-
-import { appConfig } from "@/packages/configs/app.config";
-
+import appConfig from "@/packages/configs/app.config";
 import {
   STYLE_THEMES,
   type StyleThemeName,

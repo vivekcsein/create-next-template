@@ -1,18 +1,17 @@
 @import "tailwindcss";
 
 /* Shared UI components */
-@import "./ui/input.css";
-@import "./ui/button.css";
-@import "./ui/navigation.css";
 @import "./ui/drawer.css";
-@import "./ui/card.css";
-@import "./ui/link.css";
+@import "./ui/hamburger.css";
+@import "./ui/accordian.css";
+@import "./ui/navigation.css";
+@import "./ui/footer.css";
+@import "./ui/scrollbar.css";
 
 /* Shared theming engine: @theme inline mapping + base layer. No colors. */
 @import "./utils/animations.css";
 @import "./utils/base.css";
 @import "./utils/app.css";
-@import "./utils/fonts.css";
 @import "./utils/theme.css";
 
 /*

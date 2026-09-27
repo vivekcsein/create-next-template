@@ -1,5 +1,7 @@
+import UnderDevelopment from "@/components/features/home/UnderDevelopment";
+
 const AboutPage = () => {
-  return <div>page</div>;
+  return <UnderDevelopment />;
 };
 
 export default AboutPage;

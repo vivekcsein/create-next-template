@@ -48,7 +48,7 @@ export default function ErrorPage({ error, reset }: ErrorPageProps) {
 
           <Button
             onClick={() => router.push("/")}
-            variant="outline"
+            variant="secondary"
             className="flex-1"
           >
             <Home className="h-4 w-4" />

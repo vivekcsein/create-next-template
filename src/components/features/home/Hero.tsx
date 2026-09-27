@@ -1,5 +1,5 @@
 import { Link } from "@/components/ui";
-import { appConfig } from "@/packages/configs/app.config";
+import appConfig from "@/packages/configs/app.config";
 import { cn } from "@/packages/utils/cn";
 
 const Hero = () => {
@@ -38,15 +38,23 @@ const Hero = () => {
 
           {/* Heading */}
           <div className="space-y-4">
-            <h1 className="text-balance text-5xl font-bold leading-tight text-foreground md:text-7xl">
+            <h1 className="text-balance text-5xl font-bold leading-[1.1] tracking-tight text-foreground md:text-7xl">
               Ship faster with{" "}
               <span
                 className={cn(
-                  "bg-linear-to-r bg-clip-text text-transparent",
+                  "relative inline-block bg-linear-to-r bg-clip-text text-transparent",
+                  "animate-gradient bg-[length:200%_auto]",
                   colors.gradient,
                 )}
               >
                 {appConfig.author.name}
+                <span
+                  aria-hidden="true"
+                  className={cn(
+                    "absolute inset-0 -z-10 bg-linear-to-r opacity-40 blur-2xl",
+                    colors.gradient,
+                  )}
+                />
               </span>
             </h1>
 
@@ -59,7 +67,7 @@ const Hero = () => {
 
           {/* Actions */}
           <div className="flex flex-col justify-center gap-4 pt-4 sm:flex-row">
-            <Link href="/dev" variant="button">
+            <Link href="/dev" variant="primary-button">
               click Dev Panel
             </Link>
           </div>

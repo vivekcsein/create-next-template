@@ -1,35 +1,22 @@
-export { default as Button } from "./buttons/Button";
-export { default as Card } from "./card/Card";
-export { AlignmentContainer as Container } from "./containers/AlignmentContainer";
-export { ShadowContainer } from "./containers/ShadowContainer";
+export { default as AccordionItem } from "./accordion/AccordionItem";
+export { Button, type ButtonSize, type ButtonVariant } from "./buttons/Button";
+export { type CardVariant, default as Card } from "./cards/Card";
 export { default as Drawer } from "./drawer/Drawer";
-export { default as LucideIcon } from "./icon/LucidIcon";
+export { default as Hamburger } from "./hamburger/Hamburger";
+export { default as Icon, type IconName } from "./icon/IconsLibrary";
 export { default as Image } from "./images/ImageComponent";
 export { default as NavigationLogo } from "./images/NavigationLogo";
 export { default as Checkbox } from "./inputs/Checkbox";
 export { default as Input } from "./inputs/Input";
 export {
-  type BaseInputProps,
   default as InputFactory,
+  type InputFactoryProps,
 } from "./inputs/InputFactory";
-export { default as PasswordInput } from "./inputs/PasswordInput";
-export { default as Select } from "./inputs/Select";
-// Links, Icons, Images
-export { default as Link } from "./links/Link";
+export { default as InputPassword } from "./inputs/InputPassword";
+export { default as InputSelect } from "./inputs/Select";
+export { default as Textarea } from "./inputs/Textarea";
+export { Link, type LinkUnderline, type LinkVariants } from "./links/Link";
 export { default as Marquee } from "./marquee/Marquee";
+export { Select } from "./select/Select";
 export { default as EyeClose } from "./svg/EyeClose";
 export { default as EyeOpen } from "./svg/EyeOpen";
-
-// NOTE: LucideIcon is intentionally NOT re-exported here. It directly
-// imports "server-only", and this barrel is also imported by Client
-// Components (app/error.tsx, app/dev/design-system). Re-exporting a
-// server-only module from a barrel a Client Component imports breaks
-// the build for every consumer of that barrel, not just the one that
-// actually needed the server-only piece. Import it directly instead:
-// "@/components/ui/images/LucideIcon" — safe from a Server Component.
-//
-// NavigationLogo used to be excluded here too (it read appConfig, which
-// used to import the server-only app.env.ts) — that's fixed now:
-// app.configs.ts sources from the client-safe client.env.ts instead,
-// since none of appConfig's fields actually needed the server-only
-// portion. See the note in packages/configs/app.configs.ts.

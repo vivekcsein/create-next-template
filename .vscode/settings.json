@@ -5,5 +5,22 @@
 
   "editor.codeActionsOnSave": {
     "source.organizeImports.biome": "explicit"
-  }
+  },
+  "cSpell.words": [
+    "accordian",
+    "bunx",
+    "consolas",
+    "consolasligaturizedv",
+    "Cousine",
+    "cyantrix",
+    "dribbble",
+    "Gsap",
+    "Inika",
+    "Kode",
+    "lede",
+    "ligaturized",
+    "nosniff",
+    "Oxanium",
+    "tweakcn"
+  ]
 }

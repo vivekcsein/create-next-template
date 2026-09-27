@@ -1,16 +1,7 @@
-import { Button } from "@/components/ui";
-import type { Variants } from "@/types/app";
+import { Button, type ButtonVariant } from "@/components/ui";
 import ComponentPreview from "../preview/ComponentPreview";
 
-const BUTTON_VARIANTS: Variants[] = [
-  "primary",
-  "secondary",
-  "ghost",
-  "outline",
-  "danger",
-  "success",
-  "link",
-];
+const BUTTON_VARIANTS = ["primary", "secondary"] as ButtonVariant[];
 
 const ButtonsPanel = () => {
   return (

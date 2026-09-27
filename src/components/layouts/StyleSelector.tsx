@@ -2,7 +2,7 @@
 
 import { ChevronDown } from "lucide-react";
 import { useStyleTheme } from "../providers/StyleProvider";
-import { Select } from "../ui";
+import { Select } from "../ui/select/Select";
 
 const StyleSelector = () => {
   const { currentTheme, setTheme, themes } = useStyleTheme();
@@ -10,18 +10,13 @@ const StyleSelector = () => {
   return (
     <div className="relative p-4">
       <Select
-        name="theme"
         value={currentTheme}
-        label=""
-        error=""
-        defaultChecked={true}
+        label={"Theme"}
         options={themes.map((theme) => ({
           label: theme.label,
           value: theme.name,
         }))}
-        onChange={(event: React.ChangeEvent<HTMLSelectElement>) =>
-          setTheme(event.target.value as typeof currentTheme)
-        }
+        onChange={(value: string) => setTheme(value as typeof currentTheme)}
         className="pl-10 pr-10"
       />
 

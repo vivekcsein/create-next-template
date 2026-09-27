@@ -1,39 +1,15 @@
-import type { NavItem, NavSection, NavTab } from "@/types/navigation";
-import { appConfig } from "./app.config";
+import type { NavSection, NavTab } from "@/types/navigation";
+import appConfig from "./app.config";
 
-/**
- * navigation.config.ts
- * --------------------------------------------------------------
- * Centralized nav menu data — Header, Footer, and the mobile drawer all
- * read from here instead of hardcoding hrefs, so a route rename is a
- * one-file change. Hrefs are built from `appConfig.routes` rather than
- * repeated as string literals, so this file and the route table can't
- * silently drift apart.
- *
- * `mainNav` is `NavTab[]`, not `NavItem[]` — the header's desktop mega-
- * dropdown / mobile accordion (components/layouts/navbar) need an `id`
- * to key open/closed state by, and a `dropdown` column structure that
- * `NavItem.children` (flat, one level) doesn't have. `footerNav` stays
- * `NavSection[]` — the footer is a flat two-level list, no dropdown
- * behavior to key.
- */
+/** Desktop nav shows at/above this width. Keep in sync with the 1024px breakpoints in styles/ui/*.css. */
+export const DESKTOP_NAV_MEDIA_QUERY = "(min-width: 1024px)";
+
+/** id of the mobile drawer panel — the hamburger's aria-controls target. */
+export const MOBILE_MENU_ID = "mobile-menu";
 
 export const mainNav: NavTab[] = [
   { id: "home", title: "Home", href: appConfig.routes.home },
-  {
-    id: "company",
-    title: "Company",
-    dropdown: [
-      {
-        category: "Company",
-        items: [
-          { label: "About Us", href: appConfig.routes.about },
-          { label: "Careers", href: appConfig.routes.legal.careers },
-          { label: "Contact", href: appConfig.routes.legal.contact },
-        ],
-      },
-    ],
-  },
+  { id: "about", title: "About", href: appConfig.routes.about },
   {
     id: "services",
     title: "Services",
@@ -41,42 +17,73 @@ export const mainNav: NavTab[] = [
       {
         category: "services",
         items: [
-          { label: "Web Design", href: "/web-design" },
-          { label: "Web Development", href: "/web-development" },
-          { label: "Mobile Development", href: "/mobile-development" },
+          {
+            label: "Web Development",
+            href: appConfig.routes.services.webDevelopment,
+          },
+          {
+            label: "Backend Development",
+            href: appConfig.routes.services.backend,
+          },
+          {
+            label: "Performance & SEO",
+            href: appConfig.routes.services.performanceSeo,
+          },
+          {
+            label: "Authentication & Security",
+            href: appConfig.routes.services.authenticationSecurity,
+          },
+        ],
+      },
+    ],
+  },
+  {
+    id: "legal",
+    title: "Legal",
+    dropdown: [
+      {
+        category: "Company",
+        items: [
+          { label: "Contact", href: appConfig.routes.legal.contact },
+          { label: "Privacy", href: appConfig.routes.legal.privacy },
+          { label: "Terms", href: appConfig.routes.legal.terms },
         ],
       },
     ],
   },
 ];
-
-export const authNav: NavItem[] = [
-  { label: "Sign in", href: appConfig.routes.auth.signin },
-  { label: "Sign up", href: appConfig.routes.auth.signup },
-];
-
 export const footerNav: NavSection[] = [
   {
-    title: "Product",
+    title: "Explore",
     items: [
       { label: "Home", href: appConfig.routes.home },
-      { label: "Dashboard", href: appConfig.routes.dashboard },
+      { label: "About", href: appConfig.routes.about },
     ],
   },
   {
-    title: "Company",
+    title: "Services",
     items: [
-      { label: "About Us", href: appConfig.routes.about },
-      { label: "Careers", href: appConfig.routes.legal.careers },
+      {
+        label: "Web Development",
+        href: appConfig.routes.services.webDevelopment,
+      },
+      { label: "Backend & APIs", href: appConfig.routes.services.backend },
+      {
+        label: "Performance Optimization",
+        href: appConfig.routes.services.performanceSeo,
+      },
+      {
+        label: "Security & Authentication",
+        href: appConfig.routes.services.authenticationSecurity,
+      },
+    ],
+  },
+  {
+    title: "Connect",
+    items: [
       { label: "Contact", href: appConfig.routes.legal.contact },
-    ],
-  },
-  {
-    title: "Account",
-    items: [
-      { label: "Sign in", href: appConfig.routes.auth.signin },
-      { label: "Sign up", href: appConfig.routes.auth.signup },
-      { label: "Forgot password", href: appConfig.routes.auth.forgotPassword },
+      { label: "Privacy", href: appConfig.routes.legal.privacy },
+      { label: "Terms", href: appConfig.routes.legal.terms },
     ],
   },
 ];

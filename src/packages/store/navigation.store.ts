@@ -22,14 +22,12 @@ const initialState: NavigationState = {
 /**
  * navigation.store.ts
  * --------------------------------------------------------------
- * Plain-object store, no React inside — deliberately NOT part of
- * `useAppStore` (packages/store/app.store.ts). Dropdown-hover and
- * accordion-open state is transient UI state scoped to a single Header
- * instance, not durable app-wide state; giving it its own store means a
- * dropdown hover never notifies the (unrelated) global store's
- * subscribers, and nothing here needs to survive a refresh (contrast
- * with useAppStore's `isSidebarCollapsed`, which is deliberately
- * persisted).
+ * Plain-object store, no React inside — deliberately its own store
+ * rather than a shared/global one. Dropdown-hover and accordion-open
+ * state is transient UI state scoped to a single Header instance, not
+ * durable app-wide state; giving it its own store means a dropdown
+ * hover never notifies unrelated subscribers, and nothing here needs
+ * to survive a refresh.
  *
  * State is addressed by string key ("activeDropdown", "mobileMenuOpen",
  * ...) and listeners are registered per key, so a change to one slice

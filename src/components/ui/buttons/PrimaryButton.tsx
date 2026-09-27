@@ -19,8 +19,8 @@ const PrimaryButton = React.forwardRef<HTMLButtonElement, PrimaryButtonProps>(
           "cursor-pointer",
 
           // Gradient
-          // "bg-linear-to-br from-primary via-primary to-primary/75",
-          "gradient",
+          "bg-linear-to-br from-primary via-primary to-primary/75",
+          // "gradient",
           "text-primary-foreground",
 
           // Minimal border

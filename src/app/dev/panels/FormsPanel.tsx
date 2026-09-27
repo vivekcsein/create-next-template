@@ -1,5 +1,4 @@
-import { Checkbox, Input, PasswordInput, Select } from "@/components/ui";
-import Textarea from "@/components/ui/inputs/Textarea";
+import { Checkbox, Input, InputPassword, Textarea } from "@/components/ui";
 import ComponentPreview from "../preview/ComponentPreview";
 
 const FormsPanel = () => {
@@ -40,22 +39,10 @@ const FormsPanel = () => {
         </ComponentPreview>
 
         <ComponentPreview name="Password" tag="<PasswordInput />" column>
-          <PasswordInput
+          <InputPassword
             id="ds-password"
             label="Password"
             placeholder="Enter your password"
-          />
-        </ComponentPreview>
-
-        <ComponentPreview name="Select" tag="<Select />" column>
-          <Select
-            id="ds-role"
-            label="Role"
-            options={[
-              { label: "Admin", value: "admin" },
-              { label: "Editor", value: "editor" },
-              { label: "Viewer", value: "viewer" },
-            ]}
           />
         </ComponentPreview>
 
