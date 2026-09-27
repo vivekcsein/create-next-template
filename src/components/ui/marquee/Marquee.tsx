@@ -1,3 +1,4 @@
+"use client";
 export interface MarqueeProps {
   /** The list of keywords to display */
   keywords: string[];
@@ -39,7 +40,7 @@ const Marquee = ({
 
   return (
     <div
-      className={`relative w-full overflow-hidden bg-background py-6 ${className}`}
+      className={`relative w-full min-w-0 overflow-hidden bg-background py-6 ${className}`}
     >
       {/* fade edges */}
       <div className="pointer-events-none absolute inset-y-0 left-0 z-10 w-16 bg-linear-to-r from-background to-transparent" />

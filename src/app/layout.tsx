@@ -2,7 +2,6 @@ import type { Metadata } from "next";
 import "@/styles/globals.css";
 import AppClientLayout from "@/components/layouts/AppClientLayout";
 import appConfig from "@/packages/configs/app.config";
-import fontsConfig from "@/packages/configs/fonts.config";
 import seo from "@/packages/seo";
 import { getThemeFontClassName } from "@/packages/utils/fonts";
 export const metadata: Metadata = seo;
@@ -17,7 +16,7 @@ export default function RootLayout({
       lang="en"
       suppressHydrationWarning
       data-scroll-behavior="smooth"
-      className={`${getThemeFontClassName(appConfig.site.style)} ${fontsConfig.custom.variable} h-full antialiased`}
+      className={`${getThemeFontClassName(appConfig.site.style)} h-full antialiased`}
     >
       <body suppressHydrationWarning={true}>
         <AppClientLayout>{children}</AppClientLayout>

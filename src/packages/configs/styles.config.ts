@@ -1,8 +1,4 @@
-import fontsConfig, {
-  brilliantPerformer,
-  consolasligaturizedv2,
-  georgia,
-} from "./fonts.config";
+import fontsConfig from "./fonts.config";
 
 /**
  * Shape returned by every next/font loader (Geist, Oxanium, Inika, ...).
@@ -136,11 +132,7 @@ export type StyleThemeName = (typeof STYLE_THEMES)[number]["name"];
  * personal/brand usage (e.g. `className="font-brilliant"` on a hero name),
  * not tied to any theme's --font-sans/--font-serif/--font-mono slots.
  */
-export const PERSONAL_FONTS: readonly FontLoader[] = [
-  brilliantPerformer,
-  consolasligaturizedv2,
-  georgia,
-];
+export const BRAND_FONTS: readonly FontLoader[] = [fontsConfig.custom];
 
 export const getStyleTheme = (name: StyleThemeName): StyleTheme => {
   const theme = STYLE_THEMES.find((theme) => theme.name === name);

@@ -81,9 +81,12 @@ const NavItem = memo(({ tab, activeId, onSelect }: NavItemProps) => {
           // Only set while open, so the animation replays on every open.
           // (Set unconditionally it ran once on page load, while the panel
           // was still hidden, and never again.)
+          // direction "top" -> slideInTop: panel drops in from just above
+          // the trigger instead of popping in place. ("none" resolves to
+          // no-op for slide, so the entrance never actually played before.)
           style={
             isActive
-              ? getAnimationStyle("slide", "none", { durationMs: 380 })
+              ? getAnimationStyle("slide", "top", { durationMs: 380 })
               : undefined
           }
         >

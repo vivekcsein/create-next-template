@@ -16,7 +16,7 @@ import DevSidebarNav from "./DevSidebarNav";
  */
 const DevLayout = ({ children }: Readonly<{ children: ReactNode }>) => {
   // disable in production for real apps
-  // if (process.env.NODE_ENV === "production") return null;
+  if (process.env.NODE_ENV === "production") return null;
 
   return (
     <DevProvider>

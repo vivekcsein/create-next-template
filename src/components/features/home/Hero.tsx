@@ -43,7 +43,7 @@ const Hero = () => {
               <span
                 className={cn(
                   "relative inline-block bg-linear-to-r bg-clip-text text-transparent",
-                  "animate-gradient bg-[length:200%_auto]",
+                  "animate-gradient bg-size-[200%_auto]",
                   colors.gradient,
                 )}
               >

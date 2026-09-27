@@ -1,6 +1,6 @@
 import {
+  BRAND_FONTS,
   getStyleTheme,
-  PERSONAL_FONTS,
   type StyleThemeName,
 } from "@/packages/configs/styles.config";
 
@@ -19,7 +19,7 @@ import {
  */
 export const getThemeFontClassName = (themeName: StyleThemeName): string => {
   const theme = getStyleTheme(themeName);
-  return [...theme.fonts, ...PERSONAL_FONTS]
+  return [...theme.fonts, ...BRAND_FONTS]
     .map((font) => font.variable)
     .join(" ");
 };
