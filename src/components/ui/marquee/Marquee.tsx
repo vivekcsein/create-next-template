@@ -17,10 +17,19 @@ export interface MarqueeProps {
  * A single-component, self-contained scrolling marquee of keyword pills.
  * Styled entirely with shadcn/ui theme CSS variables, so it automatically
  * matches whatever theme (light/dark/custom) is set on your <html> root.
+ *
+ * - Edge fade is a `mask-image`, not two overlay divs — it stays correct
+ *   over any background (image, gradient, transparent) instead of only
+ *   ever matching a flat `bg-background`.
+ * - Each pill gets a theme-primary hover state (glow + lift + border/text
+ *   shift) instead of a static, non-interactive chip.
+ * - The animated track is `aria-hidden`; a single hidden list carries the
+ *   real content once for screen readers, so assistive tech doesn't read
+ *   the duplicated loop twice.
  */
 const Marquee = ({
   keywords,
-  speed = 25,
+  speed = 50,
   direction = "left",
   pauseOnHover = true,
   className = "",
@@ -40,14 +49,25 @@ const Marquee = ({
 
   return (
     <div
-      className={`relative w-full min-w-0 overflow-hidden bg-background py-6 ${className}`}
+      className={`marquee-fade relative w-full min-w-0 overflow-hidden py-8 ${className}`}
     >
-      {/* fade edges */}
-      <div className="pointer-events-none absolute inset-y-0 left-0 z-10 w-16 bg-linear-to-r from-background to-transparent" />
-      <div className="pointer-events-none absolute inset-y-0 right-0 z-10 w-16 bg-linear-to-l from-background to-transparent" />
+      {/* Soft ambient glow behind the track — same primary/secondary
+          language as the hero, kept faint so it reads as texture, not a
+          second focal point. */}
+      <div
+        aria-hidden="true"
+        className="pointer-events-none absolute inset-0 -z-10 bg-linear-to-r from-primary/6 via-transparent to-secondary/6"
+      />
+
+      {/* Screen-reader content: the real list, once, not the animated loop. */}
+      <ul className="sr-only">
+        {keywords.map((word) => (
+          <li key={word}>{word}</li>
+        ))}
+      </ul>
 
       <div
-        role="marquee"
+        aria-hidden="true"
         className="marquee-track flex w-max items-center gap-3"
         style={{
           animationDuration: `${speed}s`,
@@ -59,7 +79,7 @@ const Marquee = ({
         {items.map((word, i) => (
           <span
             key={`${word}-${i}-${keywords.length}`}
-            className="flex-none whitespace-nowrap rounded-full border border-border bg-muted px-4 py-1.5 text-sm font-medium text-muted-foreground"
+            className="marquee-pill flex-none whitespace-nowrap rounded-full border border-border bg-muted/60 px-4 py-1.5 text-sm font-medium text-muted-foreground backdrop-blur-sm"
           >
             {word}
           </span>
@@ -67,6 +87,23 @@ const Marquee = ({
       </div>
 
       <style>{`
+        .marquee-fade {
+          -webkit-mask-image: linear-gradient(
+            to right,
+            transparent,
+            #000 8%,
+            #000 92%,
+            transparent
+          );
+          mask-image: linear-gradient(
+            to right,
+            transparent,
+            #000 8%,
+            #000 92%,
+            transparent
+          );
+        }
+
         .marquee-track {
           animation-name: marquee-scroll;
           animation-timing-function: linear;
@@ -76,8 +113,27 @@ const Marquee = ({
           from { transform: translateX(0); }
           to { transform: translateX(-50%); }
         }
+
+        .marquee-pill {
+          transition:
+            color 250ms ease-out,
+            border-color 250ms ease-out,
+            background-color 250ms ease-out,
+            box-shadow 250ms ease-out,
+            transform 250ms ease-out;
+        }
+        .marquee-pill:hover {
+          cursor: pointer;
+          color: var(--foreground);
+          border-color: color-mix(in oklch, var(--primary) 50%, var(--border));
+          background-color: color-mix(in oklch, var(--primary) 8%, var(--muted));
+          box-shadow: 0 0 24px -6px color-mix(in oklch, var(--primary) 60%, transparent);
+          transform: translateY(-2px);
+        }
+
         @media (prefers-reduced-motion: reduce) {
           .marquee-track { animation: none; }
+          .marquee-pill { transition: none; }
         }
       `}</style>
     </div>
@@ -95,5 +151,6 @@ export default Marquee;
 
 Requires these CSS variables to be defined on your theme root (standard
 shadcn/ui setup via `npx shadcn init` already provides them):
-  --background, --foreground, --border, --muted, --muted-foreground
+  --background, --foreground, --border, --muted, --muted-foreground,
+  --primary, --secondary
 */

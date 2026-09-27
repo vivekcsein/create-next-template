@@ -1,32 +1,19 @@
 import { Marquee } from "@/components/ui";
-
-const keywords = [
-  "React",
-  "Next.js",
-  "Tailwind",
-  "shadcn/ui",
-  "AI",
-  "Automation",
-  "SEO",
-  "Gsap",
-  "Framer Motion",
-  "Three.js",
-  "WebGL",
-];
+import { keywords } from "@/packages/configs/seo.config";
 
 const MarqueePanel = () => {
   return (
     <>
       <Marquee
         keywords={keywords}
-        speed={20}
+        speed={50}
         direction="left"
         pauseOnHover={true}
         className="w-full"
       />
       <Marquee
         keywords={keywords}
-        speed={20}
+        speed={50}
         direction="right"
         pauseOnHover={true}
         className="w-full"
