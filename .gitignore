@@ -38,7 +38,6 @@ yarn-error.log*
 
 # typescript
 *.tsbuildinfo
-next-env.d.ts
-
+# next-env.d.ts
 # add .generated to .gitignore
 .generated
